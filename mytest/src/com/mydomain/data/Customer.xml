@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<SqlMap namespace="Customer">
+
+<typeAlias alias="customer" type="com.mydomain.domain.Customer.java"/>
+
+	<resultMap id = "selectCustAcct" class="customer">
+		<result property="id" column="CUST_ID"/>
+		<result property="accountid" column="ACCT_ID"/>
+		<result property="name" column="CUST_NAME"/>
+		<result property="adress" column="CUST_ADRESS"/>
+		<result property="email" column="CUST_EMAIL"/>
+	</resultMap>
+
+	<select id = "selectCustomerById"
+		parameterClass="java.lang.Integer"
+		resultClass="customer">
+	<![CDDATA[
+	select
+	id,name,adress,email
+	from
+	CUSTOMER
+	where id = #id#
+	]]>
+	</select>
+
+	<insert id = "insertCustomer"
+		parameterClass=customer>
+	<![CDDATA[
+	insert into
+	CUSTOMER(id,name,adress,email)
+	value(#id#,#name#,#adress#,#email#)
+	]]>
+	</insert>
+
+	<update id = "updateCustomer"
+		parameterClass=customer>
+	<![CDDATA[
+	update
+	CUSTOMER
+	set
+	name=#name#,adress=#adress#,email=#email#
+	where id = #id#
+	]]>
+	</update>
+
+	<delete id = "deleteCustomer"
+		parameterClass="java.lang.Integer"
+	<![CDDATA[
+	delete from
+	CUSTOMER
+	where id = #id#
+	]]>
+	</delete>
+
+</SqlMap>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Address">
+
+	<typeAlias alias="address" type="com.mydomain.domain.Address"/>
+
+	<resultMap id="AddressResult" class="address">
+		<result property="id" column="address_id" jdbcType="int" javaType="java.lang.Integer"/>
+		<result	property="accountid" column="acct_id" jdbcType="int" javaType="java.lang.Integer"/>
+		<result property="addresses" column="address_detail" jdbcType="varchar" javaType="java.lang.String"/>
+	</resultMap>
+
+	<select id="selectAddressByAccountId" parameterClass="int" resultMap="AddressResult">
+		<![CDATA[
+		select address_id,acct_id,address_detail
+		from ADDRESS
+		where acct_id=#accountid#
+		]]>
+	</select>
+
+  <!-- Insert example, using the Account parameter class -->
+	<insert id="insertAddress" parameterClass="address">
+
+		insert into ADDRESS(address_id,acct_id,address_detail)
+		values(
+		#id#,#accountid#,#addresses#
+		)
+
+	</insert>
+	<delete id="deleteAddress" parameterClass="address">
+		<![CDATA[
+		delete from ADDRESS
+		where acct_id=#accountid#
+		]]>
+	</delete>
+	<update id="updateAddress" parameterClass="address">
+		<![CDATA[
+		update ADDRESS set acct_id=#accountid#,address_detail=#addresses#
+		where address_id=#id#
+		]]>
+	</update>
+
+</sqlMap>
